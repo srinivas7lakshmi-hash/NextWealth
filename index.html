@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextWealth AI | Enterprise Human-in-the-Loop Data Infrastructure</title>
+  <meta name="description" content="NextWealth delivers enterprise HITL data annotation, RLHF, and AI training data pipelines powered by 5,000+ domain specialists operating from India's Tier-2 tech hubs.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              900: '#070B14',
+              850: '#0D1527',
+              800: '#111C35',
+              700: '#1E293B',
+              cyan: '#00F2FE',
+              sky: '#38BDF8',
+              emerald: '#10B981',
+              indigo: '#6366F1'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-[#070B14] text-slate-100 antialiased selection:bg-cyan-500 selection:text-white">
+
+  <!-- Global Live Telemetry Ticker -->
+  <aside aria-label="Live Telemetry" class="w-full bg-[#090E1A] border-b border-slate-800/80 px-4 py-2 text-xs text-slate-300 font-mono flex items-center justify-between overflow-x-auto whitespace-nowrap">
+    <div class="flex items-center gap-6">
+      <span class="flex items-center gap-2">
+        <span class="live-indicator"></span>
+        <strong class="text-white">LIVE TELEMETRY:</strong> 
+        <span class="text-cyan-400 font-bold" id="liveSpecialists">5,240</span> Certified Annotators Online
+      </span>
+      <span class="hidden md:inline-flex items-center gap-1.5 text-slate-400">
+        <span class="text-slate-600">•</span>
+        <span>Daily Processed: <span class="text-emerald-400 font-semibold" id="liveDailyCounter">4,892,400</span> Units</span>
+      </span>
+      <span class="hidden lg:inline-flex items-center gap-1.5 text-slate-400">
+        <span class="text-slate-600">•</span>
+        <span>Consensus SLA: <span class="text-white font-semibold">99.85% Dual-Blind QA</span></span>
+      </span>
+      <span class="hidden xl:inline-flex items-center gap-1.5 text-slate-400">
+        <span class="text-slate-600">•</span>
+        <span>Active Delivery Pods: <span class="text-sky-300 font-semibold">Salem, Puducherry, Hubballi, Bhilai, Tirupati</span></span>
+      </span>
+    </div>
+    <div class="flex items-center gap-3 pl-4">
+      <span class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-semibold">
+        SOC 2 TYPE II & ISO 27001 CERTIFIED
+      </span>
+    </div>
+  </aside>
+
+  <!-- Glassmorphic Header Navigation -->
+  <header class="sticky top-0 z-50 glass-header px-4 lg:px-8 py-3.5 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-sky-600 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all">
+          <div class="w-full h-full bg-[#070B14] rounded-[10px] flex items-center justify-center">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-extrabold tracking-tight text-white flex items-center gap-1.5 font-heading">
+            NEXTWEALTH <span class="text-cyan-400 font-mono text-xs px-1.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-800/60">AI</span>
+          </span>
+          <span class="text-[10px] font-mono tracking-wider text-slate-400 uppercase">Enterprise HITL Infrastructure</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#servicesSection" class="hover:text-cyan-400 transition-colors">Services</a>
+        <a href="#studioSection" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+          Interactive Lab
+        </a>
+        <a href="#pipelineSection" class="hover:text-cyan-400 transition-colors">How We Deliver</a>
+        <a href="#tier2Section" class="hover:text-cyan-400 transition-colors">Tier-2 Advantage</a>
+        <a href="#industriesSection" class="hover:text-cyan-400 transition-colors">Industries</a>
+        <a href="#roiSection" class="hover:text-cyan-400 transition-colors">ROI Calculator</a>
+        <a href="#casesSection" class="hover:text-cyan-400 transition-colors">Client Stories</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <!-- Quick Search Ctrl+K -->
+        <button data-open-palette class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/60 border border-slate-700/60 text-xs text-slate-400 hover:text-slate-200 hover:border-slate-600 transition-all">
+          <i data-lucide="search" class="w-3.5 h-3.5"></i>
+          <span>Search</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono text-slate-400">Ctrl K</kbd>
+        </button>
+
+        <!-- Book POC Primary CTA -->
+        <button data-open-poc class="btn-primary px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2">
+          <span>Book Free POC</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section with Canvas Network -->
+  <section class="relative min-h-[92vh] flex items-center justify-center overflow-hidden radar-grid pt-12 pb-20">
+    <!-- Interactive Canvas Background -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <canvas id="neuralCanvas" class="w-full h-full block"></canvas>
+    </div>
+
+    <!-- Soft Glow Orbs -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 text-center flex flex-col items-center">
+      
+      <!-- Top Pill -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full badge-glow text-cyan-300 text-xs font-medium font-mono mb-6">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+        <span>ENTERPRISE HUMAN-IN-THE-LOOP (HITL) DATA FACTORY</span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-5xl leading-[1.1] mb-6">
+        Your AI is only as good as the <br class="hidden sm:inline">
+        <span class="gradient-text-cyan">data behind it.</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-base sm:text-xl text-slate-300 max-w-3xl leading-relaxed mb-10 font-normal">
+        Fortune 500 AI teams trust NextWealth’s <span class="text-white font-semibold">5,000+ domain specialists</span>—trained, managed, and operating from India’s Tier-2 tech hubs—to label the high-complexity data that foundational models cannot get right on their own.
+      </p>
+
+      <!-- Action Button Group -->
+      <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-16">
+        <button data-open-poc class="btn-primary w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 shadow-xl">
+          <i data-lucide="zap" class="w-4 h-4 text-cyan-300"></i>
+          <span>Book a Free 48-Hour POC</span>
+        </button>
+
+        <a href="#studioSection" class="btn-secondary w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2">
+          <i data-lucide="play" class="w-4 h-4 text-sky-400"></i>
+          <span>Launch Interactive Studio</span>
+        </a>
+
+        <a href="#roiSection" class="btn-secondary w-full sm:w-auto px-6 py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 text-slate-300">
+          <i data-lucide="calculator" class="w-4 h-4 text-emerald-400"></i>
+          <span>Calculate Pipeline ROI</span>
+        </a>
+      </div>
+
+      <!-- Floating Live Pods Metric Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-6 w-full max-w-5xl">
+        <div class="glass-panel p-4 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-white">5,000+</div>
+          <div class="text-xs text-slate-400 mt-1">Dedicated Specialists</div>
+        </div>
+        <div class="glass-panel p-4 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-cyan-400">99.85%</div>
+          <div class="text-xs text-slate-400 mt-1">Consensus Accuracy SLA</div>
+        </div>
+        <div class="glass-panel p-4 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-400">120M+</div>
+          <div class="text-xs text-slate-400 mt-1">Units Labeled / Month</div>
+        </div>
+        <div class="glass-panel p-4 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-indigo-400">NPS 88</div>
+          <div class="text-xs text-slate-400 mt-1">Client Satisfaction</div>
+        </div>
+        <div class="glass-panel p-4 text-center col-span-2 md:col-span-1">
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-amber-400">60%+</div>
+          <div class="text-xs text-slate-400 mt-1">Women in Tech Ratio</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Annotation Studio Workbench (Recruiter Magnet) -->
+  <section id="studioSection" class="py-24 px-4 lg:px-8 border-t border-slate-800/80 bg-[#090E1B] relative">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 mb-3">
+            <i data-lucide="cpu" class="w-3.5 h-3.5"></i> LIVE WORKBENCH DEMO
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+            NextWealth Interactive Annotation Studio
+          </h2>
+          <p class="text-slate-400 mt-2 max-w-2xl text-sm sm:text-base">
+            Test how our specialized delivery pods in Salem, Puducherry, and Hubballi perform micro-precision bounding boxes, 3D LiDAR cuboids, RLHF evaluation, and clinical DICOM tagging.
+          </p>
+        </div>
+
+        <!-- Studio Mode Switcher Tabs -->
+        <div class="mt-6 md:mt-0 flex flex-wrap gap-2 p-1.5 rounded-xl bg-slate-900/90 border border-slate-800">
+          <button data-studio-tab="adas" class="px-3.5 py-2 rounded-lg text-xs font-medium border bg-sky-500/20 text-sky-300 border-sky-500/40 transition-all flex items-center gap-1.5">
+            <i data-lucide="car" class="w-3.5 h-3.5"></i>
+            <span>Autonomous ADAS & LiDAR</span>
+          </button>
+          <button data-studio-tab="genai" class="px-3.5 py-2 rounded-lg text-xs font-medium border border-transparent text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+            <i data-lucide="brain" class="w-3.5 h-3.5"></i>
+            <span>GenAI / RLHF Alignment</span>
+          </button>
+          <button data-studio-tab="medical" class="px-3.5 py-2 rounded-lg text-xs font-medium border border-transparent text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+            <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+            <span>Medical DICOM PACS</span>
+          </button>
+          <button data-studio-tab="retail" class="px-3.5 py-2 rounded-lg text-xs font-medium border border-transparent text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+            <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+            <span>E-Commerce Catalog</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Studio Interactive Container -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Main Interactive Viewport (8 cols) -->
+        <div class="lg:col-span-8 glass-panel p-5 border border-slate-700/60 bg-slate-950/80 relative overflow-hidden rounded-2xl shadow-2xl">
+          
+          <!-- Top Tooling Toolbar -->
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800 text-xs text-slate-400">
+            <div class="flex items-center gap-4">
+              <span class="flex items-center gap-1.5 text-slate-300 font-mono">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>Active Task: #NW-CAM-8492</span>
+              </span>
+              <span class="hidden sm:inline text-slate-500">|</span>
+              <span class="hidden sm:inline">Pod: Salem Autonomous Center</span>
+            </div>
+            
+            <!-- Layer Toggles -->
+            <div class="flex items-center gap-3">
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="toggleBoxes" checked class="rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-0">
+                <span>Boxes</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="toggleCuboids" checked class="rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-0">
+                <span>3D Cuboids</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="toggleTags" checked class="rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-0">
+                <span>Tags</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TAB 1: ADAS VIEWPORT -->
+          <div id="studioView-adas" class="studio-view relative w-full h-[440px] rounded-xl overflow-hidden bg-slate-900 border border-slate-800 select-none">
+            <!-- Simulated Driving Scene Canvas / SVG Background -->
+            <svg class="absolute inset-0 w-full h-full object-cover" viewBox="0 0 800 440" preserveAspectRatio="none">
+              <!-- Sky / Horizon -->
+              <rect x="0" y="0" width="800" height="200" fill="#0c1322"/>
+              <line x1="0" y1="200" x2="800" y2="200" stroke="#1e293b" stroke-width="1"/>
+              
+              <!-- Road Perspective -->
+              <polygon points="350,200 450,200 780,440 20,440" fill="#141c2e"/>
+              <!-- Road Center Dashed Line -->
+              <line x1="400" y1="200" x2="400" y2="440" stroke="#fbbf24" stroke-width="3" stroke-dasharray="15,15"/>
+              
+              <!-- Left Lane Boundary -->
+              <line x1="365" y1="200" x2="160" y2="440" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="8,8" opacity="0.6"/>
+              <!-- Right Lane Boundary -->
+              <line x1="435" y1="200" x2="640" y2="440" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="8,8" opacity="0.6"/>
+
+              <!-- Distant Buildings Silhouette -->
+              <polygon points="50,200 50,150 90,150 90,200" fill="#111827"/>
+              <polygon points="110,200 110,120 160,120 160,200" fill="#1e293b" opacity="0.4"/>
+              <polygon points="620,200 620,130 680,130 680,200" fill="#111827"/>
+            </svg>
+
+            <!-- Object 1: Autonomous Lead Vehicle (Car) -->
+            <div data-object-id="car_01" class="annotation-clickable adas-box annotation-box border-cyan-400 absolute left-[38%] top-[50%] w-[190px] h-[130px] rounded bg-cyan-500/10 ring-2 ring-cyan-400 shadow-lg cursor-pointer">
+              <span class="annotation-tag bg-cyan-500 text-slate-950">Vehicle #car_01 [99.8%]</span>
+              
+              <!-- 3D Cuboid Projection Overlay -->
+              <div class="adas-cuboid absolute inset-0 pointer-events-none">
+                <svg class="w-full h-full" viewBox="0 0 190 130">
+                  <polygon points="10,20 170,20 185,5 25,5" fill="none" stroke="#00F2FE" stroke-width="1" stroke-dasharray="2,2"/>
+                  <line x1="10" y1="20" x2="10" y2="120" stroke="#00F2FE" stroke-width="1"/>
+                  <line x1="170" y1="20" x2="170" y2="120" stroke="#00F2FE" stroke-width="1"/>
+                  <line x1="185" y1="5" x2="185" y2="105" stroke="#00F2FE" stroke-width="1" stroke-dasharray="2,2"/>
+                  <line x1="25" y1="5" x2="25" y2="105" stroke="#00F2FE" stroke-width="1" stroke-dasharray="2,2"/>
+                </svg>
+              </div>
+
+              <!-- LiDAR Point Cloud Dots Simulation -->
+              <div class="absolute inset-0 flex flex-wrap gap-2 p-2 opacity-50 pointer-events-none">
+                <span class="w-1 h-1 rounded-full bg-cyan-300"></span>
+                <span class="w-1 h-1 rounded-full bg-emerald-300"></span>
+                <span class="w-1 h-1 rounded-full bg-cyan-300"></span>
+                <span class="w-1 h-1 rounded-full bg-purple-300"></span>
+              </div>
+            </div>
+
+            <!-- Object 2: Pedestrian Crossing -->
+            <div data-object-id="ped_01" class="annotation-clickable adas-box annotation-box border-amber-400 absolute left-[16%] top-[54%] w-[55px] h-[110px] rounded bg-amber-500/10 cursor-pointer">
+              <span class="annotation-tag bg-amber-500 text-slate-950">Pedestrian [99.1%]</span>
+              <div class="absolute inset-x-0 bottom-0 py-0.5 text-center text-[9px] font-mono text-amber-300">
+                Dist: 8.4m
+              </div>
+            </div>
+
+            <!-- Object 3: Traffic Signal Overhead -->
+            <div data-object-id="traffic_01" class="annotation-clickable adas-box annotation-box border-emerald-400 absolute right-[15%] top-[24%] w-[45px] h-[75px] rounded bg-emerald-500/10 cursor-pointer">
+              <span class="annotation-tag bg-emerald-500 text-slate-950">Signal [Green]</span>
+              <div class="flex flex-col items-center justify-center h-full gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-md shadow-emerald-400"></span>
+              </div>
+            </div>
+
+            <!-- Dynamic Scanline Beam -->
+            <div class="scan-line pointer-events-none"></div>
+
+            <!-- Bottom Viewport Info Bar -->
+            <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-slate-400 bg-slate-950/80 px-3 py-1.5 rounded-lg border border-slate-800">
+              <div class="flex items-center gap-3">
+                <span class="text-cyan-400">LiDAR: 128 Channels</span>
+                <span>•</span>
+                <span>FOV: 120° Frontal</span>
+                <span>•</span>
+                <span>Latency: 14ms</span>
+              </div>
+              <span class="text-emerald-400">Click any box to inspect metadata ➔</span>
+            </div>
+          </div>
+
+          <!-- TAB 2: GENAI / RLHF VIEWPORT -->
+          <div id="studioView-genai" class="studio-view hidden relative w-full h-[440px] rounded-xl p-5 overflow-y-auto bg-slate-900 border border-slate-800 text-xs">
+            <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700 mb-4">
+              <span class="font-mono text-[10px] text-cyan-400 uppercase tracking-wider block mb-1">PROMPT: Enterprise Legal M&A Risk Assessment</span>
+              <p class="text-slate-200 text-xs leading-relaxed">
+                "Evaluate antitrust risk for a $4.2B multi-cloud hyperscaler infrastructure acquisition with cross-border data transfer dependencies in the EU and APAC."
+              </p>
+            </div>
+
+            <!-- Side by side comparison -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <!-- Model A -->
+              <div class="p-3.5 rounded-xl border border-cyan-500/30 bg-slate-950/90 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="font-bold text-cyan-300">Candidate Response A</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px]">Specialist Recommended</span>
+                  </div>
+                  <p class="text-slate-300 text-xs leading-relaxed space-y-2">
+                    Directly addresses EU Digital Markets Act (DMA) Section 5(a) gatekeeper thresholds. Cites cross-border data sovereignty compliance under GDPR Article 46 and APAC PIPL mechanisms. Detailed contingency mitigation plan with 0% hallucinations.
+                  </p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between font-mono text-[11px]">
+                  <span class="text-slate-400">Truthfulness: 4.9/5.0</span>
+                  <span class="text-emerald-400">Hallucination: 0.0%</span>
+                </div>
+              </div>
+
+              <!-- Model B -->
+              <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-950/50 flex flex-col justify-between opacity-80">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="font-bold text-slate-400">Candidate Response B</span>
+                    <span class="px-2 py-0.5 rounded bg-red-500/10 text-red-400 font-mono text-[10px]">Factual Divergence</span>
+                  </div>
+                  <p class="text-slate-400 text-xs leading-relaxed">
+                    Provides generic antitrust commentary without referencing DMA gatekeeper metrics or specific cross-border transfer safe harbors. Hallucinates non-existent precedent treaty "APAC Digital Cloud Charter 2024".
+                  </p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between font-mono text-[11px]">
+                  <span class="text-slate-400">Truthfulness: 2.8/5.0</span>
+                  <span class="text-rose-400">Hallucination: High</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Specialist Action -->
+            <div class="flex items-center justify-between pt-2">
+              <button id="submitRLHFEval" class="btn-primary px-4 py-2 rounded-lg text-xs font-semibold flex items-center gap-2">
+                <span>Submit Specialist Human Consensus</span>
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+              </button>
+              <span class="text-[11px] text-slate-400 font-mono">Hubballi GenAI Delivery Pod</span>
+            </div>
+            <div id="rlhfStatusMsg" class="mt-3 hidden"></div>
+          </div>
+
+          <!-- TAB 3: MEDICAL DICOM VIEWPORT -->
+          <div id="studioView-medical" class="studio-view hidden relative w-full h-[440px] rounded-xl p-4 overflow-hidden bg-slate-900 border border-slate-800">
+            <div class="flex items-center justify-between mb-3 text-xs">
+              <span class="font-mono text-slate-300">Study UID: 1.2.840.113619.2.334.3.2831154</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono">
+                Radiologist Double-Blind QA: VERIFIED
+              </span>
+            </div>
+
+            <div class="relative w-full h-[340px] rounded-lg bg-black border border-slate-800 flex items-center justify-center overflow-hidden">
+              <!-- High-contrast Thoracic X-ray graphic -->
+              <svg class="w-full h-full" viewBox="0 0 600 340">
+                <!-- Lung Outline Background -->
+                <path d="M180,60 C120,90 100,200 130,270 C160,300 220,290 230,220 C235,160 220,100 180,60 Z" fill="#1e293b" opacity="0.6"/>
+                <path d="M420,60 C480,90 500,200 470,270 C440,300 380,290 370,220 C365,160 380,100 420,60 Z" fill="#1e293b" opacity="0.6"/>
+                
+                <!-- Spine / Sternum -->
+                <rect x="290" y="40" width="20" height="260" fill="#334155" opacity="0.7" rx="3"/>
+                
+                <!-- Target Pathology: Lobar Consolidation Segmentation Mask -->
+                <path d="M140,190 C130,220 150,260 190,250 C210,240 205,210 180,195 Z" fill="rgba(16, 185, 129, 0.45)" stroke="#10B981" stroke-width="2"/>
+                <text x="135" y="175" fill="#34D399" font-size="11" font-family="JetBrains Mono" font-weight="bold">Lobar Consolidation (IoU: 0.948)</text>
+
+                <!-- Cardiomegaly Evaluation Ratio -->
+                <line x1="220" y1="260" x2="380" y2="260" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="4,4"/>
+                <text x="260" y="278" fill="#38BDF8" font-size="10" font-family="JetBrains Mono">CTR: 0.46 (Normal)</text>
+              </svg>
+
+              <!-- Calibration badge -->
+              <div class="absolute bottom-3 left-3 bg-slate-900/90 border border-slate-700 px-3 py-1.5 rounded text-[10px] font-mono text-slate-300">
+                Modality: High-Resolution Thoracic CT • Window: Lung (-600, 1500 HU)
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: RETAIL CATALOG VIEWPORT -->
+          <div id="studioView-retail" class="studio-view hidden relative w-full h-[440px] rounded-xl p-5 overflow-y-auto bg-slate-900 border border-slate-800">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+              
+              <!-- Product Visual Card -->
+              <div class="relative bg-slate-950 p-6 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center">
+                <div class="w-36 h-48 rounded-lg bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700 flex items-center justify-center relative shadow-inner">
+                  <i data-lucide="shirt" class="w-20 h-20 text-cyan-400/80"></i>
+                  <!-- Tag Hotspot 1 -->
+                  <span class="absolute top-4 right-4 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-500/30 animate-pulse"></span>
+                  <!-- Tag Hotspot 2 -->
+                  <span class="absolute bottom-6 left-6 w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-emerald-500/30"></span>
+                </div>
+                <div class="mt-4">
+                  <span class="font-mono text-xs text-slate-400">SKU-LUX-9481-BLK</span>
+                  <h4 class="text-sm font-bold text-white mt-1">Water-Repellent Pima Trench Coat</h4>
+                </div>
+              </div>
+
+              <!-- Enriched Taxonomy Details -->
+              <div class="space-y-3 text-xs">
+                <span class="text-xs font-mono text-cyan-400 block uppercase">Extracted High-Density Attributes</span>
+                
+                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                  <span class="text-slate-400 block text-[11px]">Taxonomy Hierarchy</span>
+                  <span class="text-white font-medium">Apparel > Outerwear > Luxury Trench > Double-Breasted</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">Fabric Composition</span>
+                    <span class="text-slate-200 font-medium">100% Pima Cotton</span>
+                  </div>
+                  <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">Silhouette</span>
+                    <span class="text-slate-200 font-medium">Tailored Storm-Lapel</span>
+                  </div>
+                </div>
+
+                <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-300 text-xs flex items-center justify-between">
+                  <span>Merchant Compliance Audit</span>
+                  <span class="font-mono font-bold">100% PASSED</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Real-Time Telemetry & JSON Output Panel (4 cols) -->
+        <div class="lg:col-span-4 glass-panel p-5 border border-slate-700/60 bg-slate-950/90 rounded-2xl flex flex-col h-full shadow-2xl">
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+              <span class="text-xs font-mono font-bold uppercase text-white tracking-wider">Live Pipeline Telemetry</span>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500">JSON API FORMAT</span>
+          </div>
+
+          <p class="text-xs text-slate-400 mb-3">
+            Real-time export payload generated by NextWealth consensus engine ready for downstream model ingestion:
+          </p>
+
+          <!-- Preformatted JSON Viewer -->
+          <div class="flex-1 bg-[#060A12] p-4 rounded-xl border border-slate-800 overflow-x-auto text-[11px] font-mono text-cyan-300 leading-relaxed shadow-inner max-h-[360px] overflow-y-auto">
+            <pre id="studioTelemetryJSON">Loading telemetry payload...</pre>
+          </div>
+
+          <!-- Bottom Quality SLA Metrics -->
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Consensus Engine:</span>
+            <span class="font-mono text-emerald-400 font-semibold">99.85% Dual-Blind QA</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Core Enterprise Services Matrix -->
+  <section id="servicesSection" class="py-24 px-4 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-sky-500/10 text-sky-300 border border-sky-500/30 mb-3">
+        END-TO-END HITL SERVICES
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white">
+        Precision AI Annotation & HITL Services
+      </h2>
+      <p class="text-slate-400 mt-4 text-sm sm:text-base">
+        From multi-sensor autonomous perception to domain-expert RLHF red-teaming, NextWealth provides the high-fidelity human layer powering the world's most capable AI systems.
+      </p>
+    </div>
+
+    <!-- 6-Grid Services -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Card 1: GenAI & RLHF -->
+      <div class="glass-panel p-6 flex flex-col justify-between group hover:border-cyan-500/50 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+              <i data-lucide="brain" class="w-6 h-6"></i>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+              Fastest Growing
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Generative AI & RLHF</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-4">
+            Supervised fine-tuning (SFT), RLHF ranking, multi-turn reasoning critique, red-teaming, and hallucination reduction by credentialed domain experts.
+          </p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-800">RLHF</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">DPO</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">Red-Teaming</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">STEM Specialists</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Computer Vision -->
+      <div class="glass-panel p-6 flex flex-col justify-between group hover:border-sky-500/50 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform">
+              <i data-lucide="eye" class="w-6 h-6"></i>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-sky-500/10 text-sky-300 border border-sky-500/30">
+              Core Flagship
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Computer Vision & 3D Perception</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-4">
+            Sub-pixel precision 2D/3D bounding boxes, polygon segmentation, point-cloud LiDAR cuboids, and multi-sensor fusion for ADAS and robotics.
+          </p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-800">3D LiDAR Cuboids</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">Semantic Masks</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">KITTI Format</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Healthcare -->
+      <div class="glass-panel p-6 flex flex-col justify-between group hover:border-emerald-500/50 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+              <i data-lucide="activity" class="w-6 h-6"></i>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+              HIPAA Compliant
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Healthcare & Life Sciences</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-4">
+            Radiology DICOM segmentation, oncology histology cell counting, surgical video indexing, and clinical EHR NLP supervised by medical doctors.
+          </p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-800">DICOM PACS</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">CT/MRI Masks</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">FDA Class II Cleared</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Multilingual NLP & Speech -->
+      <div class="glass-panel p-6 flex flex-col justify-between group hover:border-indigo-500/50 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+              <i data-lucide="message-square" class="w-6 h-6"></i>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
+              40+ Languages
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Multilingual NLP & Speech AI</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-4">
+            High-fidelity phonetic transcription, acoustic modeling, named entity recognition (NER), intent parsing, and dialect-specific Indic audio data.
+          </p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-800">Indic Dialects</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">Phonetics</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">ASR Acoustic</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: E-Commerce Catalog -->
+      <div class="glass-panel p-6 flex flex-col justify-between group hover:border-amber-500/50 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+              <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-amber-500/10 text-amber-300 border border-amber-500/30">
+              Scale Engine
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">E-Commerce Catalog Intelligence</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-4">
+            Deep product taxonomy mapping, attribute enrichment, visual search tagging, duplicate SKU suppression, and automated merchant compliance checks.
+          </p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-800">Attribute Tagging</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">Taxonomy</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">Visual Search</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Content Moderation -->
+      <div class="glass-panel p-6 flex flex-col justify-between group hover:border-rose-500/50 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform">
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-rose-500/10 text-rose-300 border border-rose-500/30">
+              24/7 Global Ops
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Content Moderation & Digital Trust</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-4">
+            Multimodal trust and safety moderation across video, image, audio, and text with sub-second SLAs and strict compliance with global safety taxonomies.
+          </p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-800">Trust & Safety</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">PII Redaction</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800">Zero Retention</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How We Deliver: Agile HITL Closed-Loop Pipeline -->
+  <section id="pipelineSection" class="py-24 px-4 lg:px-8 bg-[#090E1B] border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 mb-3">
+          DELIVERY ARCHITECTURE
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+          The NextWealth Agile HITL Pipeline
+        </h2>
+        <p class="text-slate-400 mt-3 text-sm sm:text-base">
+          How raw enterprise telemetry turns into production-grade ground truth via active learning and multi-tier specialist consensus.
+        </p>
+      </div>
+
+      <!-- 5-Step Flowchart Pipeline -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+        
+        <!-- Step 1 -->
+        <div class="glass-panel p-5 relative border-t-2 border-t-cyan-400 flex flex-col justify-between">
+          <div>
+            <div class="font-mono text-xs text-cyan-400 font-bold mb-2">01 / INGESTION</div>
+            <h4 class="text-base font-bold text-white mb-2">Encrypted Ingest & PII Redaction</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Automated ingestion from S3, Snowflake, or CVAT with automated face/license-plate blurring and HIPAA de-identification.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-500">
+            SOC2 Encrypted Tunnel
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-panel p-5 relative border-t-2 border-t-sky-400 flex flex-col justify-between">
+          <div>
+            <div class="font-mono text-xs text-sky-400 font-bold mb-2">02 / PRE-LABELING</div>
+            <h4 class="text-base font-bold text-white mb-2">AI Pre-Annotation & Active Learning</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Foundational vision & LLM embeddings pre-annotate simple instances; high-uncertainty edge cases are routed to human specialists.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-500">
+            Confidence Filter > 0.95
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-panel p-5 relative border-t-2 border-t-emerald-400 flex flex-col justify-between bg-emerald-500/5">
+          <div>
+            <div class="font-mono text-xs text-emerald-400 font-bold mb-2">03 / SPECIALIST HITL</div>
+            <h4 class="text-base font-bold text-white mb-2">Tier-2 Domain Specialist Pods</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Salem & Puducherry full-time engineers execute high-complexity annotations with sub-pixel and clinical precision.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] font-mono text-emerald-400 font-semibold">
+            Dedicated Full-Time Pods
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="glass-panel p-5 relative border-t-2 border-t-indigo-400 flex flex-col justify-between">
+          <div>
+            <div class="font-mono text-xs text-indigo-400 font-bold mb-2">04 / CONSENSUS QA</div>
+            <h4 class="text-base font-bold text-white mb-2">Dual-Blind Consensus & Gold Audits</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Inter-annotator agreement (IAA) verification, statistical sample checks, and automated golden dataset benchmarking.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-500">
+            99.85% Precision Target
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="glass-panel p-5 relative border-t-2 border-t-purple-400 flex flex-col justify-between">
+          <div>
+            <div class="font-mono text-xs text-purple-400 font-bold mb-2">05 / DEPLOYMENT</div>
+            <h4 class="text-base font-bold text-white mb-2">Continuous Model Synced Export</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Version-controlled dataset release into PyTorch, Hugging Face, or custom enterprise ML registry with telemetry logs.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-500">
+            Instant API & Webhooks
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- The Tier-2 India Advantage & Social Impact Engine -->
+  <section id="tier2Section" class="py-24 px-4 lg:px-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Content (6 cols) -->
+      <div class="lg:col-span-6">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 mb-4">
+          <i data-lucide="globe" class="w-3.5 h-3.5"></i> THE TIER-2 STRATEGIC ADVANTAGE
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+          Elite AI Talent from India’s Innovation Hubs
+        </h2>
+        <p class="text-slate-300 mt-4 text-sm sm:text-base leading-relaxed">
+          While traditional vendors suffer from 30%+ annual attrition in metro centers, NextWealth pioneers delivery centers across Tier-2 Indian cities (Salem, Puducherry, Hubballi, Bhilai, Tirupati).
+        </p>
+
+        <!-- Bullet Highlights -->
+        <div class="space-y-4 mt-6">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">< 3% Attrition Rate = Unrivaled Domain Mastery</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Our specialists build multi-year institutional knowledge in autonomous driving, medical diagnostics, and legal RLHF.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">60%+ Women in Technology</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Direct socio-economic empowerment creating high-value STEM careers in non-metro communities without forced migration.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Zero Cloud / Air-Gapped Cleanroom Facilities</h4>
+              <p class="text-xs text-slate-400 mt-0.5">State-of-the-art physical facilities with biometric access, CCTV monitoring, and strict zero-data-retention sandboxes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub Selector Pills -->
+        <div class="mt-8">
+          <span class="text-xs font-mono text-slate-400 uppercase tracking-wider block mb-3">Explore Delivery Centers of Excellence:</span>
+          <div class="flex flex-wrap gap-2">
+            <button data-hub-id="salem" class="px-3.5 py-1.5 rounded-lg text-xs font-mono border border-cyan-400 bg-cyan-500/20 text-cyan-200 transition-all">
+              Salem (Autonomous ADAS)
+            </button>
+            <button data-hub-id="puducherry" class="px-3.5 py-1.5 rounded-lg text-xs font-mono border border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-500 transition-all">
+              Puducherry (Healthcare DICOM)
+            </button>
+            <button data-hub-id="hubballi" class="px-3.5 py-1.5 rounded-lg text-xs font-mono border border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-500 transition-all">
+              Hubballi (GenAI RLHF)
+            </button>
+            <button data-hub-id="bhilai" class="px-3.5 py-1.5 rounded-lg text-xs font-mono border border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-500 transition-all">
+              Bhilai (Industrial AI)
+            </button>
+            <button data-hub-id="tirupati" class="px-3.5 py-1.5 rounded-lg text-xs font-mono border border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-500 transition-all">
+              Tirupati (Catalog & Trust)
+            </button>
+            <button data-hub-id="bengaluru" class="px-3.5 py-1.5 rounded-lg text-xs font-mono border border-slate-700/60 bg-slate-800/40 text-slate-300 hover:border-slate-500 transition-all">
+              Bengaluru (HQ & Core R&D)
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Interactive Hub Card (6 cols) -->
+      <div class="lg:col-span-6" id="activeHubDetails">
+        <!-- Rendered dynamically by main.js with Salem as default -->
+        <div class="glass-panel p-6 border border-cyan-500/30 bg-slate-900/90 relative overflow-hidden">
+          <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl"></div>
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 mb-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> ACTIVE POD
+              </span>
+              <h3 class="text-xl font-bold text-white">Salem Center of Excellence</h3>
+              <p class="text-sm text-slate-400 flex items-center gap-1 mt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-cyan-400"></i> Tamil Nadu, India
+              </p>
+            </div>
+            <div class="text-right">
+              <span class="text-2xl font-bold font-mono text-emerald-400">99.98%</span>
+              <p class="text-xs text-slate-400">SLA Uptime</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-800">
+            <div>
+              <span class="text-xs text-slate-400 block">Core Specialization</span>
+              <span class="text-sm font-medium text-slate-200">Autonomous Driving, LiDAR 3D, Computer Vision</span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block">Dedicated Workforce</span>
+              <span class="text-sm font-medium text-slate-200">1,450+ Engineers & Annotators</span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block">Diversity Index</span>
+              <span class="text-sm font-semibold text-emerald-400">64% Women in Tech</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive ROI & Pipeline Cost Calculator -->
+  <section id="roiSection" class="py-24 px-4 lg:px-8 bg-[#090E1B] border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 mb-3">
+          TCO SAVINGS MODELER
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+          Pipeline Cost & Throughput Calculator
+        </h2>
+        <p class="text-slate-400 mt-3 text-sm sm:text-base">
+          Estimate direct cost savings and turnaround acceleration by deploying a dedicated NextWealth Tier-2 managed delivery pod.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Controls Column (6 cols) -->
+        <div class="lg:col-span-6 glass-panel p-6 sm:p-8 border border-slate-700/60 bg-slate-950/80 rounded-2xl">
+          
+          <!-- Volume Slider -->
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <label for="calcVolumeSlider" class="text-sm font-medium text-slate-200">Monthly Annotation Volume</label>
+              <span id="calcVolumeDisplay" class="font-mono text-sm font-bold text-cyan-400">150,000 Units / Month</span>
+            </div>
+            <input type="range" id="calcVolumeSlider" min="20000" max="1000000" step="10000" value="150000" class="w-full">
+            <div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+              <span>20K / mo</span>
+              <span>500K / mo</span>
+              <span>1M+ / mo</span>
+            </div>
+          </div>
+
+          <!-- Domain Type -->
+          <div class="mb-6">
+            <label for="calcDomainSelect" class="text-sm font-medium text-slate-200 block mb-2">Target Data Pipeline & Modality</label>
+            <select id="calcDomainSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500">
+              <option value="lidar" selected>Autonomous Driving (3D LiDAR Cuboids & Vision)</option>
+              <option value="genai">Generative AI (RLHF, SFT & Red-Teaming)</option>
+              <option value="medical">Healthcare (DICOM CT/MRI PACS Segmentation)</option>
+              <option value="retail">E-Commerce & Retail (Catalog Attribute Extraction)</option>
+            </select>
+          </div>
+
+          <!-- SLA Quality Level -->
+          <div class="mb-8">
+            <label for="calcSlaSelect" class="text-sm font-medium text-slate-200 block mb-2">Quality & QA Protocol Level</label>
+            <select id="calcSlaSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-cyan-500">
+              <option value="enterprise" selected>Enterprise Tier (99.2% QA Precision)</option>
+              <option value="critical">Mission-Critical Tier (99.85% Dual-Blind Consensus)</option>
+              <option value="standard">Standard Production Tier (95% QA Precision)</option>
+            </select>
+          </div>
+
+          <!-- Pod Allocation Info -->
+          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Assigned Delivery Pod Capacity:</span>
+            <span id="roiSpecialistsAllocated" class="font-mono text-cyan-300 font-bold">94 Certified Specialists</span>
+          </div>
+
+        </div>
+
+        <!-- Calculated Summary Display (6 cols) -->
+        <div class="lg:col-span-6 glass-panel p-6 sm:p-8 border border-emerald-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 rounded-2xl relative overflow-hidden shadow-2xl">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
+          
+          <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
+            <span class="text-xs font-mono uppercase tracking-wider text-slate-400">Projected Monthly Financials</span>
+            <span id="roiPercentageSaved" class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              71% Cost Reduction
+            </span>
+          </div>
+
+          <!-- Side-by-side cost comparison -->
+          <div class="grid grid-cols-2 gap-6 mb-6">
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+              <span class="text-xs text-slate-400 block mb-1">US In-House / Onshore</span>
+              <div id="roiOnshoreCost" class="text-2xl font-bold font-mono text-slate-300">$89,700</div>
+              <span class="text-[11px] text-slate-500 font-mono mt-1 block">Est. Monthly TCO</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-cyan-950/20 border border-cyan-500/40">
+              <span class="text-xs text-cyan-300 block mb-1">NextWealth Managed Pod</span>
+              <div id="roiNWCost" class="text-2xl font-bold font-mono text-cyan-300">$25,875</div>
+              <span class="text-[11px] text-cyan-400/80 font-mono mt-1 block">All-Inclusive Fee</span>
+            </div>
+          </div>
+
+          <!-- Net Annual Savings Box -->
+          <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 mb-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs text-emerald-300 block">Projected Net Annual Savings:</span>
+                <div id="roiSavingsAnnual" class="text-3xl font-extrabold font-mono text-emerald-400 mt-0.5">$765,900</div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-emerald-300 block">Turnaround SLA:</span>
+                <div id="roiTurnaroundDays" class="text-xl font-bold font-mono text-white mt-0.5">4 Days</div>
+                <span class="text-[10px] text-slate-400">vs 18 days onshore</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Download Action -->
+          <button id="btnDownloadQuote" class="btn-primary w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>Generate Official Estimation Spec</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Industries & Deep Domain Expertise -->
+  <section id="industriesSection" class="py-24 px-4 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 mb-3">
+        VERTICAL EXPERTISE
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white">
+        Built for Mission-Critical Industries
+      </h2>
+      <p class="text-slate-400 mt-4 text-sm sm:text-base">
+        Domain-credentialed teams adhering to strict regulatory protocols across automotive, healthcare, finance, and industrial sectors.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Automotive -->
+      <div class="glass-panel p-6 border-slate-800 hover:border-cyan-500/40 transition-all">
+        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4">
+          <i data-lucide="car" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Automotive & Autonomous Systems</h3>
+        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          Optimizing autonomous vehicles, ADAS, and sensor fusion with precise image, LiDAR point-cloud, and multi-camera video annotation.
+        </p>
+        <span class="text-xs font-mono text-cyan-400 font-semibold">4.2M+ driving miles annotated</span>
+      </div>
+
+      <!-- BFSI -->
+      <div class="glass-panel p-6 border-slate-800 hover:border-emerald-500/40 transition-all">
+        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
+          <i data-lucide="shield" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">BFSI & FinTech</h3>
+        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          Driving fraud detection, risk assessment, AML checks, and KYC verification with high-quality financial document processing.
+        </p>
+        <span class="text-xs font-mono text-emerald-400 font-semibold">99.92% document extraction accuracy</span>
+      </div>
+
+      <!-- Healthcare -->
+      <div class="glass-panel p-6 border-slate-800 hover:border-rose-500/40 transition-all">
+        <div class="w-10 h-10 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center mb-4">
+          <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Healthcare & Life Sciences</h3>
+        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          Accelerating AI-driven medical imaging, oncology diagnostics, and clinical EHR data processing under board-certified doctor review.
+        </p>
+        <span class="text-xs font-mono text-rose-400 font-semibold">1.2M+ DICOM CT/MRI scans labeled</span>
+      </div>
+
+      <!-- Media & Technology -->
+      <div class="glass-panel p-6 border-slate-800 hover:border-indigo-500/40 transition-all">
+        <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
+          <i data-lucide="tv" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Media & Technology</h3>
+        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          Delivering high-quality metadata tagging, video intelligence, and AI-powered content indexing for media streaming giants.
+        </p>
+        <span class="text-xs font-mono text-indigo-400 font-semibold">10M+ media clips indexed</span>
+      </div>
+
+      <!-- Retail & eCommerce -->
+      <div class="glass-panel p-6 border-slate-800 hover:border-amber-500/40 transition-all">
+        <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Retail & eCommerce</h3>
+        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          Providing high-accuracy product categorization, attribute tagging, and AI-driven inventory optimization for seamless shopping.
+        </p>
+        <span class="text-xs font-mono text-amber-400 font-semibold">25M+ active catalog SKUs</span>
+      </div>
+
+      <!-- Industrial & Manufacturing -->
+      <div class="glass-panel p-6 border-slate-800 hover:border-sky-500/40 transition-all">
+        <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center mb-4">
+          <i data-lucide="factory" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Industrial & Manufacturing</h3>
+        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          Enhancing defect detection, thermal inspection, predictive maintenance, and quality control with precise AI-driven computer vision.
+        </p>
+        <span class="text-xs font-mono text-sky-400 font-semibold">99.8% factory defect catch rate</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Security, Compliance & Governance -->
+  <section id="securitySection" class="py-20 px-4 lg:px-8 bg-[#090E1B] border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 mb-3">
+          ZERO-COMPROMISE SECURITY
+        </span>
+        <h2 class="text-3xl font-extrabold text-white">
+          Certified Security & Air-Gapped Governance
+        </h2>
+        <p class="text-slate-400 mt-2 text-sm">
+          Audited by premier third-party accreditors to handle proprietary IP, confidential health records, and defense datasets.
+        </p>
+      </div>
+
+      <!-- Certifications Badge Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div class="glass-panel p-4 text-center border-slate-800">
+          <i data-lucide="shield-check" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
+          <h4 class="text-sm font-bold text-white">SOC 2 Type II</h4>
+          <span class="text-[11px] text-slate-400">AICPA Audited</span>
+        </div>
+        <div class="glass-panel p-4 text-center border-slate-800">
+          <i data-lucide="lock" class="w-8 h-8 text-cyan-400 mx-auto mb-2"></i>
+          <h4 class="text-sm font-bold text-white">ISO 27001:2022</h4>
+          <span class="text-[11px] text-slate-400">InfoSec Certified</span>
+        </div>
+        <div class="glass-panel p-4 text-center border-slate-800">
+          <i data-lucide="check-circle" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
+          <h4 class="text-sm font-bold text-white">ISO 9001:2015</h4>
+          <span class="text-[11px] text-slate-400">Quality Management</span>
+        </div>
+        <div class="glass-panel p-4 text-center border-slate-800">
+          <i data-lucide="file-text" class="w-8 h-8 text-rose-400 mx-auto mb-2"></i>
+          <h4 class="text-sm font-bold text-white">HIPAA Ready</h4>
+          <span class="text-[11px] text-slate-400">Healthcare BAA Pods</span>
+        </div>
+        <div class="glass-panel p-4 text-center border-slate-800">
+          <i data-lucide="globe" class="w-8 h-8 text-amber-400 mx-auto mb-2"></i>
+          <h4 class="text-sm font-bold text-white">GDPR Compliant</h4>
+          <span class="text-[11px] text-slate-400">EU Privacy Strict</span>
+        </div>
+        <div class="glass-panel p-4 text-center border-slate-800">
+          <i data-lucide="cpu" class="w-8 h-8 text-sky-400 mx-auto mb-2"></i>
+          <h4 class="text-sm font-bold text-white">TISAX Ready</h4>
+          <span class="text-[11px] text-slate-400">Automotive Security</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Stories & Proven Impact -->
+  <section id="casesSection" class="py-24 px-4 lg:px-8 max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 mb-3">
+          PROVEN ENTERPRISE IMPACT
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+          Client Success Stories & Case Studies
+        </h2>
+        <p class="text-slate-400 mt-2 text-sm">
+          Discover how global AI innovators scale with NextWealth's agile HITL delivery pods.
+        </p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+        <button data-case-filter="all" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border bg-sky-500/20 text-sky-300 border-sky-500/50">All Stories</button>
+        <button data-case-filter="automotive" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border border-slate-800 text-slate-400 hover:text-white">Automotive</button>
+        <button data-case-filter="healthcare" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border border-slate-800 text-slate-400 hover:text-white">Healthcare</button>
+        <button data-case-filter="bfsi" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border border-slate-800 text-slate-400 hover:text-white">BFSI</button>
+        <button data-case-filter="retail" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border border-slate-800 text-slate-400 hover:text-white">Retail</button>
+      </div>
+    </div>
+
+    <!-- Case Studies Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="caseStudiesContainer">
+      
+      <!-- Case 1 -->
+      <div class="case-study-card glass-panel p-6 border-slate-800 flex flex-col justify-between" data-sector="automotive">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs font-mono">
+            <span class="text-cyan-400 font-semibold">AUTOMOTIVE / ADAS</span>
+            <span class="text-slate-500">Salem Center of Excellence</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">
+            Annotating 4.2M LiDAR Frames with 99.85% Precision for Level 4 Robotaxis
+          </h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-6">
+            Scaled a dedicated pod of 450 certified 3D perception specialists within 3 weeks. Reduced model retraining cycle from 4 weeks to 5 days using agile HITL feedback loops.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800 text-center font-mono">
+          <div>
+            <div class="text-base font-bold text-cyan-400">99.85%</div>
+            <div class="text-[10px] text-slate-400">Precision SLA</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-emerald-400">4.2x</div>
+            <div class="text-[10px] text-slate-400">Faster Delivery</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-indigo-400">62%</div>
+            <div class="text-[10px] text-slate-400">TCO Saved</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case-study-card glass-panel p-6 border-slate-800 flex flex-col justify-between" data-sector="healthcare">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs font-mono">
+            <span class="text-emerald-400 font-semibold">HEALTHCARE & LIFE SCIENCES</span>
+            <span class="text-slate-500">Puducherry Innovation Lab</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">
+            Enabling Early Lung Cancer AI Diagnostics with 1.2M Segmented Chest CTs
+          </h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-6">
+            Deployed 180 MBBS graduates and certified radiology technicians at Puducherry hub. Implemented dual-blind cross-validation with automated IoU scoring.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800 text-center font-mono">
+          <div>
+            <div class="text-base font-bold text-emerald-400">0.948</div>
+            <div class="text-[10px] text-slate-400">Average IoU</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-cyan-400">Class II</div>
+            <div class="text-[10px] text-slate-400">FDA Cleared</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-indigo-400">1.2M</div>
+            <div class="text-[10px] text-slate-400">CT Scans Labeled</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="case-study-card glass-panel p-6 border-slate-800 flex flex-col justify-between" data-sector="bfsi">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs font-mono">
+            <span class="text-indigo-400 font-semibold">BFSI & FINTECH</span>
+            <span class="text-slate-500">Hubballi Hub</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">
+            Zero-Error Financial Document Extraction for Cross-Border AML & Trade Finance
+          </h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-6">
+            Parsed unstructured multilingual invoices, letters of credit, and swift messages across 14 languages with automated PII masking and human oversight.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800 text-center font-mono">
+          <div>
+            <div class="text-base font-bold text-indigo-400">99.92%</div>
+            <div class="text-[10px] text-slate-400">Extraction Accuracy</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-emerald-400">< 90 Sec</div>
+            <div class="text-[10px] text-slate-400">Per Document SLA</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-cyan-400">100%</div>
+            <div class="text-[10px] text-slate-400">Audit Passed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 4 -->
+      <div class="case-study-card glass-panel p-6 border-slate-800 flex flex-col justify-between" data-sector="retail">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs font-mono">
+            <span class="text-amber-400 font-semibold">RETAIL & E-COMMERCE</span>
+            <span class="text-slate-500">Tirupati Digital Trust Campus</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">
+            Categorizing 15 Million Cross-Border Products for Neural Visual Search
+          </h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-6">
+            Extracted high-density visual attributes (fabric, silhouette, brand logos, sleeve type) across 800+ categories to train transformer recommendation engines.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800 text-center font-mono">
+          <div>
+            <div class="text-base font-bold text-amber-400">15M</div>
+            <div class="text-[10px] text-slate-400">Enriched SKUs</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-emerald-400">+34%</div>
+            <div class="text-[10px] text-slate-400">Search Conversion</div>
+          </div>
+          <div>
+            <div class="text-base font-bold text-cyan-400">65%</div>
+            <div class="text-[10px] text-slate-400">Faster Ingestion</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Final CTA Banner -->
+  <section class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+    <div class="glass-panel p-8 sm:p-14 border border-cyan-500/40 bg-gradient-to-tr from-slate-950 via-[#0A1124] to-slate-950 rounded-3xl text-center relative overflow-hidden shadow-2xl">
+      <div class="absolute -top-24 -left-24 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 mb-4">
+        RISK-FREE 48-HOUR PILOT
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white max-w-3xl mx-auto">
+        Test Our Specialists on Your Toughest Edge Cases
+      </h2>
+      <p class="text-slate-300 max-w-2xl mx-auto mt-4 text-sm sm:text-base leading-relaxed">
+        Send us a sample batch of 500-1,000 units. We'll configure tooling, assign dedicated specialists, and deliver audited annotations within 48 hours—at zero cost.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button data-open-poc class="btn-primary px-8 py-3.5 rounded-xl font-semibold text-sm flex items-center gap-2 shadow-xl">
+          <i data-lucide="zap" class="w-4 h-4 text-cyan-300"></i>
+          <span>Schedule Free 48-Hour POC</span>
+        </button>
+        <a href="#studioSection" class="btn-secondary px-8 py-3.5 rounded-xl font-semibold text-sm text-slate-300 hover:text-white">
+          Explore Annotation Studio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enterprise Footer -->
+  <footer class="border-t border-slate-800/80 bg-[#050811] text-slate-400 text-xs py-16 px-4 lg:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+      
+      <!-- Brand & Mission (2 cols) -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-600 p-0.5">
+            <div class="w-full h-full bg-[#070B14] rounded-md flex items-center justify-center">
+              <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+          </div>
+          <span class="text-base font-bold text-white tracking-tight">NEXTWEALTH AI</span>
+        </div>
+        <p class="text-slate-400 text-xs leading-relaxed max-w-sm mb-4">
+          Enterprise Human-in-the-Loop (HITL) data infrastructure trusted by Fortune 500 AI teams. Powered by 5,000+ certified specialists operating from India's Tier-2 tech hubs.
+        </p>
+        <div class="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+          <span>© 2026 NextWealth Entrepreneurs Pvt. Ltd. All rights reserved.</span>
+        </div>
+      </div>
+
+      <!-- Services Links -->
+      <div>
+        <h4 class="text-white font-semibold mb-3">AI Services</h4>
+        <ul class="space-y-2 text-slate-400">
+          <li><a href="#servicesSection" class="hover:text-cyan-400">Generative AI & RLHF</a></li>
+          <li><a href="#servicesSection" class="hover:text-cyan-400">Computer Vision & 3D LiDAR</a></li>
+          <li><a href="#servicesSection" class="hover:text-cyan-400">Healthcare DICOM PACS</a></li>
+          <li><a href="#servicesSection" class="hover:text-cyan-400">Multilingual Indic Speech</a></li>
+          <li><a href="#servicesSection" class="hover:text-cyan-400">E-Commerce Catalog</a></li>
+          <li><a href="#servicesSection" class="hover:text-cyan-400">Content Moderation & Trust</a></li>
+        </ul>
+      </div>
+
+      <!-- Hubs & Social Impact -->
+      <div>
+        <h4 class="text-white font-semibold mb-3">Tier-2 Hub Network</h4>
+        <ul class="space-y-2 text-slate-400">
+          <li><a href="#tier2Section" class="hover:text-cyan-400">Salem Autonomous Pod</a></li>
+          <li><a href="#tier2Section" class="hover:text-cyan-400">Puducherry Medical Lab</a></li>
+          <li><a href="#tier2Section" class="hover:text-cyan-400">Hubballi GenAI RLHF Hub</a></li>
+          <li><a href="#tier2Section" class="hover:text-cyan-400">Bhilai Industrial AI Facility</a></li>
+          <li><a href="#tier2Section" class="hover:text-cyan-400">Tirupati Digital Trust Campus</a></li>
+          <li><a href="#tier2Section" class="hover:text-cyan-400">Bengaluru Headquarters</a></li>
+        </ul>
+      </div>
+
+      <!-- Global Offices & Contact -->
+      <div>
+        <h4 class="text-white font-semibold mb-3">Global Offices</h4>
+        <div class="space-y-3 text-[11px] leading-relaxed">
+          <div>
+            <strong class="text-slate-300 block">India Headquarters:</strong>
+            <span>GoSpaze, Building 1314, 1st Fl, Indiranagar, Bengaluru – 560038</span>
+          </div>
+          <div>
+            <strong class="text-slate-300 block">United States Office:</strong>
+            <span>13183 Roxbury Drive, Frisco, Texas 75035, USA</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Legal / Quality Policy -->
+    <div class="max-w-7xl mx-auto pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
+      <div class="flex items-center gap-4">
+        <a href="#" class="hover:text-slate-300">CSR Policy</a>
+        <span>•</span>
+        <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+        <span>•</span>
+        <a href="#" class="hover:text-slate-300">Quality Policy</a>
+        <span>•</span>
+        <a href="#" class="hover:text-slate-300">Security Disclosures</a>
+      </div>
+      <div>
+        <span>Engineered with Vanilla JS & Modern Web Standards • Production Ready</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- RECRUITER FLOATING PILL & SPOTLIGHT DRAWER -->
+  <div class="recruiter-pill">
+    <button id="openRecruiterDrawer" class="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-slate-900/95 border border-cyan-500/50 text-cyan-300 text-xs font-semibold shadow-2xl backdrop-blur-md hover:bg-slate-800 transition-all">
+      <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+      <i data-lucide="briefcase" class="w-4 h-4"></i>
+      <span>Recruiter Spotlight: Architecture & Specs</span>
+    </button>
+  </div>
+
+  <!-- Recruiter Slide-Over Drawer -->
+  <div id="recruiterDrawer" class="fixed inset-y-0 right-0 w-full sm:w-[460px] bg-slate-950/95 border-l border-cyan-500/30 p-6 z-[9999] shadow-2xl backdrop-blur-2xl transform translate-x-full transition-transform duration-300 overflow-y-auto">
+    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="w-5 h-5 text-cyan-400"></i>
+        <h3 class="text-base font-bold text-white font-heading">Engineering Architecture Specs</h3>
+      </div>
+      <button id="closeRecruiterDrawer" class="text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="space-y-6 mt-6 text-xs text-slate-300">
+      <div>
+        <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 font-mono text-[10px] font-semibold">PORTFOLIO PROJECT HIGHLIGHT</span>
+        <h4 class="text-base font-bold text-white mt-1">Enterprise NextWealth AI Redesign</h4>
+        <p class="text-slate-400 mt-1 leading-relaxed">
+          Crafted to demonstrate senior frontend engineering capabilities: complex real-time interactive canvases, stateful annotation studio sandbox, ROI mathematical modeler, zero build tool lock-in, and 60fps rendering.
+        </p>
+      </div>
+
+      <!-- Key Technical Features -->
+      <div class="space-y-3">
+        <h5 class="text-white font-bold font-mono uppercase text-[11px] tracking-wider">Key Engineering Pillars:</h5>
+        
+        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+          <strong class="text-cyan-300 block mb-0.5">1. High-Performance Canvas Animation</strong>
+          <span class="text-slate-400">60 FPS 2D canvas with mouse repulsion physics, dynamic bezier data packets, and device pixel ratio awareness.</span>
+        </div>
+
+        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+          <strong class="text-emerald-300 block mb-0.5">2. Interactive Annotation Studio Sandbox</strong>
+          <span class="text-slate-400">Live multi-mode workbench (ADAS 3D LiDAR, LLM RLHF, DICOM radiology, catalog tagging) with real-time JSON schema serialization.</span>
+        </div>
+
+        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+          <strong class="text-indigo-300 block mb-0.5">3. Dynamic Mathematical ROI Modeler</strong>
+          <span class="text-slate-400">Real-time reactive calculation across volumetric data tiers, precision multipliers, and pod staffing models.</span>
+        </div>
+
+        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+          <strong class="text-amber-300 block mb-0.5">4. Fast Command Palette (Ctrl+K) & Modal System</strong>
+          <span class="text-slate-400">Keyboard accessible quick-navigation with search indexing and event-driven toast notifications.</span>
+        </div>
+      </div>
+
+      <!-- Recruiter Actions -->
+      <div class="pt-4 border-t border-slate-800 space-y-3">
+        <a href="https://github.com/srinivas7lakshmi-hash/NextWealth" target="_blank" class="w-full btn-primary py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 text-xs">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>View Source Code on GitHub</span>
+        </a>
+        <button data-open-poc class="w-full btn-secondary py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 text-xs text-slate-200">
+          <i data-lucide="mail" class="w-4 h-4 text-cyan-400"></i>
+          <span>Contact Candidate / Schedule Interview</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette Modal (Ctrl+K) -->
+  <div id="commandPaletteModal" class="hidden fixed inset-0 z-[9999] modal-overlay flex items-start justify-center pt-20 px-4">
+    <div class="w-full max-w-xl glass-panel p-4 border border-cyan-500/40 bg-slate-950/95 shadow-2xl rounded-2xl">
+      <div class="flex items-center gap-3 px-3 py-2 border-b border-slate-800">
+        <i data-lucide="search" class="w-4 h-4 text-cyan-400"></i>
+        <input id="commandPaletteInput" type="text" placeholder="Type a command, industry, or service (e.g. LiDAR, RLHF, ROI)..." class="w-full bg-transparent text-sm text-white focus:outline-none placeholder-slate-500 font-sans">
+        <button id="closeCommandPalette" class="text-xs px-2 py-1 rounded bg-slate-800 text-slate-400 font-mono">ESC</button>
+      </div>
+      <div id="commandPaletteResults" class="max-h-64 overflow-y-auto mt-2 space-y-1"></div>
+    </div>
+  </div>
+
+  <!-- Book Free POC Modal -->
+  <div id="pocModal" class="hidden fixed inset-0 z-[9999] modal-overlay flex items-center justify-center px-4">
+    <div class="w-full max-w-lg glass-panel p-6 sm:p-8 border border-cyan-500/40 bg-slate-950/95 rounded-2xl shadow-2xl relative">
+      <button id="closePocModal" class="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="mb-6">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 mb-2">
+          ZERO RISK PILOT
+        </span>
+        <h3 class="text-xl font-bold text-white font-heading">Book a Free 48-Hour Pilot POC</h3>
+        <p class="text-xs text-slate-400 mt-1">
+          Receive 500-1,000 labeled units with guaranteed 99.8% precision SLA. No credit card or contract required.
+        </p>
+      </div>
+
+      <form id="pocForm" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Work Email</label>
+          <input type="email" required placeholder="alex@company.ai" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Company / Team</label>
+            <input type="text" required placeholder="e.g. Anthropic, Waymo" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">Data Modality</label>
+            <select class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-cyan-500">
+              <option>Autonomous 3D LiDAR & Video</option>
+              <option>Generative AI / LLM RLHF</option>
+              <option>Medical DICOM Radiology</option>
+              <option>E-Commerce Catalog</option>
+              <option>Multilingual Speech NLP</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Tooling Preference</label>
+          <select class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-cyan-500">
+            <option>NextWealth Proprietary Workbench</option>
+            <option>Client Tooling (Labelbox / Scale / CVAT / Kili)</option>
+            <option>Open Source Annotation Harness</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Edge Cases & Accuracy Objectives</label>
+          <textarea rows="2" placeholder="Briefly describe what your current models are failing to detect..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 mt-2">
+          <span>Confirm & Reserve Pilot Pod</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Quote Proposal Modal -->
+  <div id="quoteModal" class="hidden fixed inset-0 z-[9999] modal-overlay flex items-center justify-center px-4">
+    <div class="w-full max-w-md glass-panel p-6 border border-cyan-500/40 bg-slate-950/95 rounded-2xl shadow-2xl relative">
+      <button id="closeQuoteModal" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+          <i data-lucide="check" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white font-heading">Executive Cost Estimate</h3>
+          <span class="text-[10px] font-mono text-slate-400">Spec ID: #NW-EST-2026-X9</span>
+        </div>
+      </div>
+
+      <div id="quoteModalSummary" class="my-4"></div>
+
+      <button onclick="window.showToast('Official PDF Spec downloaded to client terminal!', 'success'); document.getElementById('quoteModal').classList.add('hidden');" class="btn-primary w-full py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center gap-2">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        <span>Download Official PDF Spec</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/canvas-bg.js"></script>
+  <script src="js/studio-demo.js"></script>
+  <script src="js/roi-calculator.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
+
